@@ -1,12 +1,7 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bycjwt");
+const mongoose = require('mongoose')
+const hash = require('bycjwt')
 
 const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
   username: {
     type: String,
     required: true,
@@ -16,39 +11,24 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  profileImageUrl: {
-    type: String
+  status: {
+    type: String,
+    default: 'disable'
   },
-  messages: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Message"
-    }
-  ]
-});
-
-userSchema.pre("save", async function(next) {
-  try {
-    if (!this.isModified("password")) {
-      return next();
-    }
-    let hashedPassword = await bcrypt.hash(this.password, 10);
-    this.password = hashedPassword;
-    return next();
-  } catch (err) {
-    return next(err);
+  role: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Role'
+  },
+  detail: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Detail'
   }
-});
+})
 
-userSchema.methods.comparePassword = async function(candidatePassword, next) {
-  try {
-    let isMatch = await bcrypt.compare(candidatePassword, this.password);
-    return isMatch;
-  } catch (err) {
-    return next(err);
-  }
-};
+userSchema.post('validate', function() {
+  this.password = hash.bcencode(this.password)
+})
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema)
 
-module.exports = User;
+module.exports = User

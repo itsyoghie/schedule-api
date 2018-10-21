@@ -1,0 +1,19 @@
+{
+  "name": "schedule-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smkn2guguak/schedule-api.git"
+  },
+  "author": "Asrul Harahap",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smkn2guguak/schedule-api/issues"
+  },
+  "homepage": "https://github.com/smkn2guguak/schedule-api#readme"
+}
